@@ -11,11 +11,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   const { id, name, phonenumber } = req.body;
-  PhoneBook.create({
-    id,
-    name,
-    phonenumber
-  }, (err, contact) => {
+  PhoneBook.create({ id, name, phonenumber }, (err, contact) => {
     if(err) return res.status(500).send(err);
     res.status(200).json(contact)
   })
@@ -31,7 +27,6 @@ router.delete('/:id', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   const id = req.params.id;
-  console.log("INI ID ", id);
   PhoneBook.findByIdAndUpdate(id, {$set: {name : req.body.name, phonenumber : req.body.phonenumber}}, function (err, contact) {
     if (err) return res.status(500).json(err);
     res.status(200).json(contact);
