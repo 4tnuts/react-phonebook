@@ -1,4 +1,5 @@
 import React from "react";
+import EditContact from "./editContact";
 
 function ContactRow(props) {
     const { id, name, phonenumber } = props.contact
