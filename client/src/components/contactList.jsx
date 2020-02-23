@@ -13,6 +13,7 @@ function ContactList(props) {
           isEdit: contact.isEdit
         }}
         key={no}
+        editContact={props.editContact}
       />
     );
   });

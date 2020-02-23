@@ -29,7 +29,7 @@ class Phonebook extends Component {
       this.setState({contacts : contact.data})
     })
     .catch(err => {
-      console.log("Error Load Chat", err);
+      console.log("Error Load Chat : ", err);
     })
   }
 
@@ -37,6 +37,32 @@ class Phonebook extends Component {
     this.setState(prevState => ({
       contacts : [...prevState.contacts, contactData]
     }))
+    request
+    .post('phonebook', {
+      name : contactData.name,
+      phonenumber : contactData.phonenumber
+    })
+    .then(contact => {
+
+    })
+    .catch(err => {
+      console.log("Save Data : ", err)
+    })
+  }
+
+  editContact(contact){
+    const contactData = {
+      name : contact.name,
+      phonenumber : contact.phonenumber
+    }
+    request
+    .put(`phonebook/${contact.id}`, contactData)
+    .then(contact => {
+      
+    })
+    .catch(err => {
+      console.log("Edit Data : ", err);
+    })
   }
 
   render() {
@@ -50,7 +76,7 @@ class Phonebook extends Component {
         <div className="container">
           <AddContact saveContact={this.saveContact}/>
           <SearchContact />
-          <ContactList contactList={this.state.contacts} />
+          <ContactList contactList={this.state.contacts} editContact={this.editContact}/>
         </div>
         <div className="container mt-5">
           <h5 className="text-center text-muted">

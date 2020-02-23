@@ -3,7 +3,7 @@ import EditContact from "./editContact";
 class ContactRow extends Component {
   constructor(props){
     super(props)
-    this.state = {isEdit : props.isEdit};
+    this.state = {isEdit : false};
     this.changeToEdit = this.changeToEdit.bind(this);
   }
   
@@ -16,7 +16,7 @@ class ContactRow extends Component {
   render() {
     const { name, phonenumber, no } = this.props.contact;
     if (this.state.isEdit === true) {
-      return <EditContact contact={this.props.contact} />;
+      return <EditContact contact={this.props.contact} editContact={this.props.editContact}/>;
     } else {
       return (
         <tr>

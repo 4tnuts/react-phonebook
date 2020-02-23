@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class AddContact extends Component {
   constructor(props) {
     super(props);
-    this.state = { contact : { name: "", phonenumber: ""} , isChanged: false };
+    this.state = { name: "", phonenumber: "" , isChanged: false };
 
     this.changeAdd = this.changeAdd.bind(this);
     this.cancelAdd = this.cancelAdd.bind(this);
@@ -27,7 +27,7 @@ class AddContact extends Component {
 
   saveContact(event){
     event.preventDefault();
-    this.props.saveContact(this.state.contact)
+    this.props.saveContact({name : this.state.name, phonenumber : this.state.phonenumber})
     this.setState({name : '', phonenumber:'', isEdit: false})
   }
 
@@ -45,14 +45,14 @@ class AddContact extends Component {
             <form onSubmit={this.saveContact}>
               <div className="form-row">
                 <div className="col">
-                  <input type="text" className="form-control" placeholder="Name" value={this.state.contact.name} onChange={this.handleNameInput} />
+                  <input type="text" className="form-control" placeholder="Name" value={this.state.name} onChange={this.handleNameInput} />
                 </div>
                 <div className="col">
                   <input
                     type="text"
                     className="form-control"
                     placeholder="Phone Number"
-                    value = {this.state.contact.phonenumber}
+                    value = {this.state.phonenumber}
                     onChange = {this.handlePhonenumber}
                   />
                 </div>
