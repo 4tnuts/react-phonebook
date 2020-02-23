@@ -2,14 +2,17 @@ import React from "react";
 import ContactRow from "./contactRow";
 
 function ContactList(props) {
-  const contacts = props.contactList.map(contact => {
+  const contacts = props.contactList.map((contact, no) => {
     return (
       <ContactRow
         contact={{
+          no,
           id: contact._id,
           name: contact.name,
-          phonenumber: contact.phonenumber
+          phonenumber: contact.phonenumber,
+          isEdit: contact.isEdit
         }}
+        key={no}
       />
     );
   });

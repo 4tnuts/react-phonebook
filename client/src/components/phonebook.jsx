@@ -2,39 +2,62 @@ import React, { Component } from "react";
 import AddContact from "./addContact";
 import SearchContact from "./searchContact";
 import ContactList from "./contactList";
+import axios from "axios";
+const request = axios.create({
+  baseURL: "http://localhost:4000/api/",
+  timeout: 1000,
+  headers: { "X-Custom-Header": "foobar" }
+});
+
 class Phonebook extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contacts: [
-        { id: "123", name: "Akusuka", phonenumber: "203399" },
-        { id: "232", name: "buumbumb", phonenumber: "82723" },
-        { id: "4433", name: "lololol", phonenumber: "09876663" }
-      ]
+      contacts: []
     };
-
+    this.saveContact = this.saveContact.bind(this);
+    this.loadContact = this.loadContact.bind(this);
   }
 
+  componentDidMount(){
+    this.loadContact();
+  }
+
+  loadContact(){
+    request.get('phonebook')
+    .then(contact => {
+      this.setState({contacts : contact.data})
+    })
+    .catch(err => {
+      console.log("Error Load Chat", err);
+    })
+  }
+
+  saveContact(contactData) {
+    this.setState(prevState => ({
+      contacts : [...prevState.contacts, contactData]
+    }))
+  }
 
   render() {
     return (
-      <body>
+      <div>
         <div className="container-fluid">
           <div className="container mt-5">
             <h1 className="display-4 text-center">React Phonebook</h1>
           </div>
         </div>
         <div className="container">
-          <AddContact />
+          <AddContact saveContact={this.saveContact}/>
           <SearchContact />
           <ContactList contactList={this.state.contacts} />
         </div>
-        <div class="container mt-5">
-          <h5 class="text-center text-muted">
+        <div className="container mt-5">
+          <h5 className="text-center text-muted">
             Created by https://github.com/4tnuts
           </h5>
         </div>
-      </body>
+      </div>
     );
   }
 }

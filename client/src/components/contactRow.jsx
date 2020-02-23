@@ -1,19 +1,36 @@
-import React from "react";
+import React, { Component } from "react";
 import EditContact from "./editContact";
-
-function ContactRow(props) {
-    const { id, name, phonenumber } = props.contact
-  return (
-    <tr>
-      <th scope="row">{id}</th>
-      <td>{name}</td>
-      <td>{phonenumber}</td>
-      <td>
-        <button className="btn btn-outline-primary"> Edit </button>&nbsp;
-        <button className="btn btn-outline-danger"> Delete </button>
-      </td>
-    </tr>
-  );
+class ContactRow extends Component {
+  constructor(props){
+    super(props)
+    this.state = {isEdit : props.isEdit};
+    this.changeToEdit = this.changeToEdit.bind(this);
+  }
+  
+  
+  changeToEdit(event){
+    event.preventDefault();
+    this.setState({isEdit : true})
+  }
+  
+  render() {
+    const { name, phonenumber, no } = this.props.contact;
+    if (this.state.isEdit === true) {
+      return <EditContact contact={this.props.contact} />;
+    } else {
+      return (
+        <tr>
+          <th scope="row">{no + 1}</th>
+          <td>{name}</td>
+          <td>{phonenumber}</td>
+          <td>
+            <button className="btn btn-outline-primary" onClick={this.changeToEdit}> Edit </button>&nbsp;
+            <button className="btn btn-outline-danger"> Delete </button>
+          </td>
+        </tr>
+      );
+    }
+  }
 }
 
 export default ContactRow;

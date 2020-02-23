@@ -8,7 +8,7 @@ class SearchContact extends Component {
 
   render(){
     return (
-        <div className="card shadow-sm mt-5">
+        <div className="card shadow-sm mt-3">
             <div className="card-header font-weight-bold">
                 Search Contact
             </div>
