@@ -9,6 +9,9 @@ class ContactRow extends Component {
     this.deleteRow = this.deleteRow.bind(this);
   }
   
+  componentDidMount(){
+    console.log("INI ID YANG DI CONTACT ROW", this.props.contact.id);
+  }
   
   changeToEdit(event){
     event.preventDefault();
@@ -20,6 +23,7 @@ class ContactRow extends Component {
   }
 
   deleteRow(){
+    console.log("INI ID PAS DIPENCET",this.props.contact.id)
     this.props.deleteContact(this.props.contact.id)
   }
   

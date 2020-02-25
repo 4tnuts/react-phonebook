@@ -38,15 +38,16 @@ class Phonebook extends Component {
 
   saveContact(contactData) {
     console.log(this.state.contacts);
+    this.setState(prevState => ({
+      contacts : [...prevState.contacts, contactData]
+    }))
     request
     .post('phonebook', {
       name : contactData.name,
       phonenumber : contactData.phonenumber
     })
     .then(contact => {
-      this.setState(prevState => ({
-        contacts : [...prevState.contacts, contact]
-      }))
+      
     })
     .catch(err => {
       console.log("Save Data : ", err)
@@ -76,10 +77,11 @@ class Phonebook extends Component {
   }
 
   deleteContact(id){
-    this.setState({contacts : this.state.contacts.filter(contact => contact._id !== id)})
+    console.log("yang di delete", id);
+    console.log("INI YAND DI DELETE ", this.state.contact)
     request.delete(`phonebook/${id}`)
     .then(contact => {
-
+      this.setState({contacts : this.state.contacts.filter(contact => contact._id !== id)}, ()=> {console.table(this.state.contacts)})
     })
     .catch(err => {
       console.log("Delete Data : ", err);

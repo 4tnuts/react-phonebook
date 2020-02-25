@@ -19,7 +19,7 @@ router.post('/', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
   const id  = req.params.id;
-  PhoneBook.findOneAndDelete(id, (err, contactId) => {
+  PhoneBook.findByIdAndRemove(id, (err, contactId) => {
     if(err) return res.status(500).send(err)
     res.status(200).json(contactId);
   })
