@@ -14,6 +14,7 @@ function ContactList(props) {
         }}
         key={no}
         editContact={props.editContact}
+        deleteContact =  { props.deleteContact }
       />
     );
   });

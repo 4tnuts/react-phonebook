@@ -28,6 +28,7 @@ class EditContact extends Component {
 
   saveContact(){
     this.props.editContact({id : this.state.id, name:this.state.name, phonenumber: this.state.phonenumber})
+    this.props.changeToRow();
   }
 
 

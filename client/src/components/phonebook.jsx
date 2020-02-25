@@ -17,6 +17,8 @@ class Phonebook extends Component {
     };
     this.saveContact = this.saveContact.bind(this);
     this.loadContact = this.loadContact.bind(this);
+    this.deleteContact = this.deleteContact.bind(this);
+    this.editContact = this.editContact.bind(this);
   }
 
   componentDidMount(){
@@ -27,6 +29,7 @@ class Phonebook extends Component {
     request.get('phonebook')
     .then(contact => {
       this.setState({contacts : contact.data})
+      console.log("ketika mount ini data : " , this.state.contacts)
     })
     .catch(err => {
       console.log("Error Load Chat : ", err);
@@ -34,16 +37,16 @@ class Phonebook extends Component {
   }
 
   saveContact(contactData) {
-    this.setState(prevState => ({
-      contacts : [...prevState.contacts, contactData]
-    }))
+    console.log(this.state.contacts);
     request
     .post('phonebook', {
       name : contactData.name,
       phonenumber : contactData.phonenumber
     })
     .then(contact => {
-
+      this.setState(prevState => ({
+        contacts : [...prevState.contacts, contact]
+      }))
     })
     .catch(err => {
       console.log("Save Data : ", err)
@@ -51,17 +54,35 @@ class Phonebook extends Component {
   }
 
   editContact(contact){
-    const contactData = {
+    const newContact = {
+      id : contact.id,
       name : contact.name,
       phonenumber : contact.phonenumber
-    }
+
+    } 
+      
+    this.setState(prevState => ({
+      contacts : prevState.contacts.map(oldContact => oldContact.id === newContact.id ? oldContact : newContact)
+    }))
+
     request
-    .put(`phonebook/${contact.id}`, contactData)
+    .put(`phonebook/${contact.id}`, contact)
     .then(contact => {
       
     })
     .catch(err => {
       console.log("Edit Data : ", err);
+    })
+  }
+
+  deleteContact(id){
+    this.setState({contacts : this.state.contacts.filter(contact => contact._id !== id)})
+    request.delete(`phonebook/${id}`)
+    .then(contact => {
+
+    })
+    .catch(err => {
+      console.log("Delete Data : ", err);
     })
   }
 
@@ -76,7 +97,7 @@ class Phonebook extends Component {
         <div className="container">
           <AddContact saveContact={this.saveContact}/>
           <SearchContact />
-          <ContactList contactList={this.state.contacts} editContact={this.editContact}/>
+          <ContactList contactList={this.state.contacts} editContact={this.editContact} deleteContact={this.deleteContact}/>
         </div>
         <div className="container mt-5">
           <h5 className="text-center text-muted">

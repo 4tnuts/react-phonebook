@@ -5,6 +5,8 @@ class ContactRow extends Component {
     super(props)
     this.state = {isEdit : false};
     this.changeToEdit = this.changeToEdit.bind(this);
+    this.changeToRow = this.changeToRow.bind(this);
+    this.deleteRow = this.deleteRow.bind(this);
   }
   
   
@@ -12,11 +14,19 @@ class ContactRow extends Component {
     event.preventDefault();
     this.setState({isEdit : true})
   }
+
+  changeToRow(event){
+    this.setState({isEdit : false});
+  }
+
+  deleteRow(){
+    this.props.deleteContact(this.props.contact.id)
+  }
   
   render() {
     const { name, phonenumber, no } = this.props.contact;
     if (this.state.isEdit === true) {
-      return <EditContact contact={this.props.contact} editContact={this.props.editContact}/>;
+      return <EditContact contact={this.props.contact} editContact={this.props.editContact} changeToRow={this.changeToRow}/>;
     } else {
       return (
         <tr>
@@ -25,7 +35,7 @@ class ContactRow extends Component {
           <td>{phonenumber}</td>
           <td>
             <button className="btn btn-outline-primary" onClick={this.changeToEdit}> Edit </button>&nbsp;
-            <button className="btn btn-outline-danger"> Delete </button>
+            <button className="btn btn-outline-danger" onClick={this.deleteRow}> Delete </button>
           </td>
         </tr>
       );
