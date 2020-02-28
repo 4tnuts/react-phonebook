@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import EditContact from "./editContact";
+import EditContact from "../containers/editContact";
 class ContactRow extends Component {
   constructor(props){
     super(props)
@@ -7,10 +7,6 @@ class ContactRow extends Component {
     this.changeToEdit = this.changeToEdit.bind(this);
     this.changeToRow = this.changeToRow.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
-  }
-  
-  componentDidMount(){
-    console.log("INI ID YANG DI CONTACT ROW", this.props.contact.id);
   }
   
   changeToEdit(event){
@@ -23,7 +19,6 @@ class ContactRow extends Component {
   }
 
   deleteRow(){
-    console.log("INI ID PAS DIPENCET",this.props.contact.id)
     this.props.deleteContact(this.props.contact.id)
   }
   
